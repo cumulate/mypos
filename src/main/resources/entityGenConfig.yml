@@ -1,0 +1,14 @@
+jdbcSettings:
+  url: "jdbc:sqlserver://localhost:1433;databaseName=OrderEntrySystem"
+  username: "devuser"
+  password: "devuser"
+  driverClassName: "com.microsoft.sqlserver.jdbc.SQLServerDriver"
+
+
+# If you need to specify non-standard source directory, set the following setting as needed
+#   - string value: the relative path from the project root directory.
+outputDirectory: "src/main/java"
+
+# The package name used when generating entity classes
+#   - string value: full package name
+packageName: "com.tmt.pos.mypos.entities"
