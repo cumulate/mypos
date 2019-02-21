@@ -2,6 +2,7 @@ package com.tmt.pos.mypos.entities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
 import javax.persistence.*;
@@ -12,6 +13,7 @@ import java.time.LocalDateTime;
 @Entity(name = "com.tmt.pos.mypos.entities.OrderItem")
 @Table(name = "OrderItem")
 @ToString(exclude = {"order"})
+@EqualsAndHashCode(of = {"orderItemId"})
 public class OrderItem {
 
     @Id
@@ -43,7 +45,7 @@ public class OrderItem {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "order_number")
     @JsonBackReference
-    private Orders order;
+    private Order order;
 
     @Column(name = "created_by")
     private String createdBy;

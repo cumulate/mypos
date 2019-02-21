@@ -2,12 +2,14 @@ package com.tmt.pos.mypos.entities;
 
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
 
 @Data
 @Entity(name = "com.tmt.pos.mypos.entities.Customer")
 @Table(name = "Customer")
+@EqualsAndHashCode(of = {"customerCode"})
 public class Customer {
 
 
@@ -29,5 +31,5 @@ public class Customer {
 
     @OneToOne
     @JoinColumn(name = "sales_man" )
-    private Users salesMan;
+    private User salesMan;
 }

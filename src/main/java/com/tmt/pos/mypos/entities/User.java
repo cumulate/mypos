@@ -2,13 +2,15 @@ package com.tmt.pos.mypos.entities;
 
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
 
 @Data
-@Entity(name = "com.tmt.pos.mypos.entities.Users")
+@Entity(name = "com.tmt.pos.mypos.entities.User")
 @Table(name = "Users")
-public class Users {
+@EqualsAndHashCode(of = {"userId"})
+public class User {
 
     @Id
     @GeneratedValue(strategy    = GenerationType.IDENTITY)

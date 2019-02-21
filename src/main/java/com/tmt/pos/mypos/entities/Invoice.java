@@ -33,7 +33,7 @@ public class Invoice {
      */
     @OneToMany(fetch = FetchType.LAZY )
     @JoinColumn(name = "order_number")
-    private List<Orders> orderList;
+    private List<Order> orderList;
 
 
     @Column(name = "invoice_amount")

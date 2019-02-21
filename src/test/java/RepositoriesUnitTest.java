@@ -2,9 +2,9 @@ import com.tmt.pos.mypos.dao.CustomerRepository;
 import com.tmt.pos.mypos.dao.OrderRepository;
 import com.tmt.pos.mypos.dao.UsersRepository;
 import com.tmt.pos.mypos.entities.Customer;
-import com.tmt.pos.mypos.entities.Orders;
+import com.tmt.pos.mypos.entities.Order;
 import com.tmt.pos.mypos.entities.OrderItem;
-import com.tmt.pos.mypos.entities.Users;
+import com.tmt.pos.mypos.entities.User;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -49,9 +49,9 @@ public class RepositoriesUnitTest {
         LocalDateTime now = LocalDateTime.now();
 
 
-        Users user = userRepository.findOneByUserName("mubin");
+        User user = userRepository.findOneByUserName("mubin");
 
-        Orders order = new Orders();
+        Order order = new Order();
 
         order.setCreatedBy(user.getUserName());
         order.setCreationTime(now);
@@ -92,21 +92,21 @@ public class RepositoriesUnitTest {
         order.setDiscountAmount(BigDecimal.valueOf(5780));
         order.setTotalAmount(BigDecimal.valueOf(50000 + 8600 - 5780));
 
-        log.info(" Orders Object - > " + order);
+        log.info(" Order Object - > " + order);
         orderRepository.save(order);
-        log.info("Orders saved successfully !!");
+        log.info("Order saved successfully !!");
     }
 
     @Test
     @Rollback(false)
     public void createUser() {
-        Users user = new Users();
+        User user = new User();
         user.setEmail("niranjan.518@gmail.com");
         user.setFirstName("Niranjan");
         user.setLastName("Velakanti");
         user.setUserName("niranjan_v");
         user.setPassword("niranjan");
-        Users updateEntity = userRepository.save(user);
+        User updateEntity = userRepository.save(user);
         assertTrue("failed to create user", updateEntity.getUserId() > 0);
     }
 

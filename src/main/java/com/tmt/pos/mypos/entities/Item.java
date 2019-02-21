@@ -2,6 +2,7 @@ package com.tmt.pos.mypos.entities;
 
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,6 +14,7 @@ import java.util.Date;
 @Data
 @Entity(name = "com.tmt.pos.mypos.entities.Item")
 @Table(name = "Item")
+@EqualsAndHashCode(of = {"itemCode"})
 public class Item {
 
     @Id

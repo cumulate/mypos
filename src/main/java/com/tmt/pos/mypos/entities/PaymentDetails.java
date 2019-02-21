@@ -1,6 +1,7 @@
 package com.tmt.pos.mypos.entities;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
@@ -9,6 +10,7 @@ import java.util.Date;
 @Data
 @Entity(name = "com.tmt.pos.mypos.entities.PaymentDetails")
 @Table(name = "PaymentDetails")
+@EqualsAndHashCode(of = {"paymentDetailsId"})
 public class PaymentDetails {
 
     @Id

@@ -1,17 +1,16 @@
-package com.tmt.pos.mypos;
+package com.tmt.pos.mypos.controller;
 
 import com.tmt.pos.mypos.entities.Customer;
 import com.tmt.pos.mypos.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
 
 @RestController
+@RequestMapping("customers")
 public class CustomerController {
 
     private static final String template = "Hello, %s!";
@@ -21,10 +20,17 @@ public class CustomerController {
     @Autowired
     CustomerService customerService;
 
-    @GetMapping("/customers")
+    @GetMapping
     @ResponseBody
     public List<Customer> all() {
         return customerService.getAllCustomers();
+    }
+
+
+    @GetMapping("/{id}")
+    @ResponseBody
+    public ResponseEntity<Customer> getOne(@PathVariable(name = "id") String customerCode) {
+        return ResponseEntity.ok(customerService.getOne(customerCode));
     }
 
 }

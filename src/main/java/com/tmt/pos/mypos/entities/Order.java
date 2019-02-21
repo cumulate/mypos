@@ -3,6 +3,7 @@ package com.tmt.pos.mypos.entities;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.tmt.pos.mypos.persistence.util.StringPrefixedSequenceIdGenerator;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
@@ -16,10 +17,11 @@ import java.util.Date;
 import java.util.List;
 
 @Data
-@Entity(name = "com.tmt.pos.mypos.entities.Orders")
+@Entity(name = "com.tmt.pos.mypos.entities.Order")
 @Table(name = "Orders")
+@EqualsAndHashCode(of = {"orderNumber"})
 //@ToString(exclude = {"orderItemList"})
-public class Orders {
+public class Order {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "order")

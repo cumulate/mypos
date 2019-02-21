@@ -11,7 +11,7 @@ buildscript {
         classpath group: 'com.smartnews', name: 'jpa-entity-generator', version: '0.99.4'
         // https://mvnrepository.com/artifact/com.microsoft.sqlserver/sqljdbc4
         classpath group: 'com.microsoft.sqlserver', name: 'sqljdbc4', version: '4.0'
-
+        classpath 'com.bmuschko:gradle-tomcat-plugin:2.5'
 
     }
 }
@@ -32,18 +32,33 @@ version '1.0'
 //sourceSets.test.compileClasspath += configurations.providedCompile
 //sourceSets.test.runtimeClasspath += configurations.providedCompile
 
-
+apply plugin: 'war'
 apply plugin: 'idea'
 apply plugin: 'jacoco'
 apply plugin: 'java'
 apply plugin: 'project-report'
+
+
+
 
 apply from:  'repositories.gradle'
 
 sourceCompatibility = JavaVersion.VERSION_1_8
 targetCompatibility = JavaVersion.VERSION_1_8
 
+apply plugin: 'com.bmuschko.tomcat'
 
+dependencies {
+    def tomcatVersion = '8.5.16'
+    tomcat "org.apache.tomcat.embed:tomcat-embed-core:${tomcatVersion}",
+            "org.apache.tomcat.embed:tomcat-embed-logging-juli:8.5.2",
+            "org.apache.tomcat.embed:tomcat-embed-jasper:${tomcatVersion}"
+}
+
+tomcat {
+    httpProtocol = 'org.apache.coyote.http11.Http11Nio2Protocol'
+    ajpProtocol  = 'org.apache.coyote.ajp.AjpNio2Protocol'
+}
 
 
 dependencies {
@@ -85,8 +100,25 @@ dependencies {
     compile ('org.springframework.boot:spring-boot-starter-data-jpa') {
       // exclude module: 'hibernate-entitymanager'
     }
-  //  compile 'javax.interceptor:javax.interceptor-api:1.+'
-    compile 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.8.5'
+    // https://mvnrepository.com/artifact/org.springframework.security/spring-security-web
+    compile group: 'org.springframework.security', name: 'spring-security-web'
+
+// https://mvnrepository.com/artifact/commons-fileupload/commons-fileupload
+    compile group: 'commons-fileupload', name: 'commons-fileupload', version: '1.4'
+
+    //  compile 'javax.interceptor:javax.interceptor-api:1.+'
+   // compile 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.8.5'
+    compile "com.fasterxml.jackson.core:jackson-databind:2.9.7"
+    compile "com.fasterxml.jackson.core:jackson-core:2.9.7"
+    compile "com.fasterxml.jackson.core:jackson-annotations:2.9.7"
+    // https://mvnrepository.com/artifact/com.fasterxml.jackson.datatype/jackson-datatype-jsr310
+    compile group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jsr310', version: '2.9.7'
+// https://mvnrepository.com/artifact/com.fasterxml.jackson.datatype/jackson-datatype-jdk8
+    compile group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jdk8', version: '2.9.7'
+
+    //for lazy loading issues
+    // https://mvnrepository.com/artifact/com.fasterxml.jackson.datatype/jackson-datatype-hibernate5
+    compile group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-hibernate5', version: '2.9.7'
 
     // runtime database & ORM
    // compile 'mysql:mysql-connector-java:5.1.6'
@@ -117,6 +149,18 @@ bootRun {
     }
 }
 */
+
+war {
+    enabled = true
+}
+bootJar {
+    mainClassName = 'com.tmt.pos.mypos.DummyApplication'
+}
+
+bootWar {
+    mainClassName = 'com.tmt.pos.mypos.DummyApplication'
+}
+
 
 clean {
     delete 'log'
