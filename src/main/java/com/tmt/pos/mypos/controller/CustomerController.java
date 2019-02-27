@@ -1,8 +1,12 @@
 package com.tmt.pos.mypos.controller;
 
 import com.tmt.pos.mypos.entities.Customer;
+import com.tmt.pos.mypos.rest.dto.PaginatedResult;
+import com.tmt.pos.mypos.rest.transformer.PageTransformer;
 import com.tmt.pos.mypos.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,17 +17,16 @@ import java.util.concurrent.atomic.AtomicLong;
 @RequestMapping("customers")
 public class CustomerController {
 
-    private static final String template = "Hello, %s!";
-
-    private final AtomicLong counter = new AtomicLong();
-
     @Autowired
     CustomerService customerService;
 
     @GetMapping
     @ResponseBody
-    public List<Customer> all() {
-        return customerService.getAllCustomers();
+    public ResponseEntity<PaginatedResult<Customer>> all(Pageable page) {
+
+        Page<Customer> customerPage = customerService.getAllCustomers(page);
+
+        return ResponseEntity.ok(PageTransformer.transformOutput(customerPage));
     }
 
 

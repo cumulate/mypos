@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.format.FormatterRegistry;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
@@ -47,8 +49,14 @@ public class WebMVCConfig implements WebMvcConfigurer {
     }
 
     @Override
-    public void addArgumentResolvers(List<HandlerMethodArgumentResolver> resolvers) {
-      //  resolvers.add(new CustomArgumentResolver());
+    public void addArgumentResolvers(List<HandlerMethodArgumentResolver> argumentResolvers) {
+        final PageableHandlerMethodArgumentResolver pageableArgumentResolver = new PageableHandlerMethodArgumentResolver();
+        //1-based page number indexes in the request parameters
+        pageableArgumentResolver.setOneIndexedParameters(true);
+        pageableArgumentResolver.setFallbackPageable(PageRequest.of(0, 100));
+
+        argumentResolvers.add(pageableArgumentResolver);
+
     }
 
     // Handle HTTP GET requests for /resources/** by efficiently serving

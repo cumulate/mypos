@@ -1,6 +1,7 @@
 package com.tmt.pos.mypos.entities;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -29,6 +30,7 @@ public class User {
     @Column(name = "email")
     private String email;
 
+    @JsonIgnore
     @Column(name = "password")
     private String password;
 }

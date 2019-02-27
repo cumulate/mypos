@@ -26,6 +26,10 @@ public class Customer {
     @Column(name = "address")
     private String address;
 
+    @Column(name = "email")
+    private String email;
+
+
     @Column(name = "zipcode")
     private String zipcode;
 

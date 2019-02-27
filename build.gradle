@@ -3,7 +3,8 @@ buildscript {
     ext['hibernate.version'] = '5.2.1.Final'
     ext['jackson.version'] = '2.8.5'
     repositories {
-        mavenLocal()
+       // mavenLocal()
+        mavenCentral()
         jcenter()
     }
     dependencies {
@@ -45,6 +46,14 @@ apply from:  'repositories.gradle'
 
 sourceCompatibility = JavaVersion.VERSION_1_8
 targetCompatibility = JavaVersion.VERSION_1_8
+
+
+idea {
+    module {
+      //  downloadJavadoc = true
+        downloadSources = true
+    }
+}
 
 apply plugin: 'com.bmuschko.tomcat'
 

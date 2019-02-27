@@ -4,6 +4,8 @@ import com.tmt.pos.mypos.dao.CustomerRepository;
 import com.tmt.pos.mypos.entities.Customer;
 import lombok.extern.log4j.Log4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,8 +23,10 @@ public class CustomerService {
         this.customerRepository = customerRepository;
     }
 
-    public List<Customer> getAllCustomers() {
-        return customerRepository.findAll();
+    public Page<Customer> getAllCustomers(Pageable pageable) {
+
+        Page<Customer> customerPage = customerRepository.findAll(pageable);
+        return customerPage;
     }
 
 
