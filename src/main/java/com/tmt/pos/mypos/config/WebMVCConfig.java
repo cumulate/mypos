@@ -45,7 +45,7 @@ public class WebMVCConfig implements WebMvcConfigurer {
 
     @Override
     public void addFormatters(FormatterRegistry registry) {
-     //   registry.addFormatterForFieldAnnotation(new MaskFormatAnnotationFormatterFactory());
+        //   registry.addFormatterForFieldAnnotation(new MaskFormatAnnotationFormatterFactory());
     }
 
     @Override
@@ -69,7 +69,7 @@ public class WebMVCConfig implements WebMvcConfigurer {
 
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
-       // registry.addViewController("/").setViewName("home");
+        // registry.addViewController("/").setViewName("home");
     }
 
     @Override
@@ -87,17 +87,15 @@ public class WebMVCConfig implements WebMvcConfigurer {
     }
 
 
-
-    public MappingJackson2HttpMessageConverter jacksonMessageConverter(){
+    public MappingJackson2HttpMessageConverter jacksonMessageConverter() {
 
         SessionFactory sf = emf.getObject().unwrap(SessionFactory.class);
-        Hibernate5Module hibernate5Module = new Hibernate5Module((Mapping)sf, sf);
+        Hibernate5Module hibernate5Module = new Hibernate5Module((Mapping) sf, sf);
         hibernate5Module.enable(Hibernate5Module.Feature.FORCE_LAZY_LOADING);
 
 
-
         Jackson2ObjectMapperBuilder b = new Jackson2ObjectMapperBuilder();
-            b.indentOutput(true)
+        b.indentOutput(true)
                 .dateFormat(new SimpleDateFormat("yyyy-MM-dd"))
                 .modulesToInstall(hibernate5Module);
 
@@ -120,7 +118,7 @@ public class WebMVCConfig implements WebMvcConfigurer {
     @Override
     public void configureAsyncSupport(AsyncSupportConfigurer configurer) {
         configurer.setDefaultTimeout(3000);
-       // configurer.registerCallableInterceptors(new TimeoutCallableProcessingInterceptor());
+        // configurer.registerCallableInterceptors(new TimeoutCallableProcessingInterceptor());
     }
 
     @Bean

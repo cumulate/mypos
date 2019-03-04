@@ -3,12 +3,12 @@ buildscript {
     ext['hibernate.version'] = '5.2.1.Final'
     ext['jackson.version'] = '2.8.5'
     repositories {
-       // mavenLocal()
+        // mavenLocal()
         mavenCentral()
         jcenter()
     }
     dependencies {
-       // classpath("org.springframework.boot:spring-boot-gradle-plugin:1.5.8.RELEASE")
+        // classpath("org.springframework.boot:spring-boot-gradle-plugin:1.5.8.RELEASE")
         classpath group: 'com.smartnews', name: 'jpa-entity-generator', version: '0.99.4'
         // https://mvnrepository.com/artifact/com.microsoft.sqlserver/sqljdbc4
         classpath group: 'com.microsoft.sqlserver', name: 'sqljdbc4', version: '4.0'
@@ -18,9 +18,9 @@ buildscript {
 }
 
 plugins {
-        id 'org.detoeuf.swagger-codegen' version '1.7.1'
-        id 'org.springframework.boot' version '2.1.1.RELEASE'
-        id "io.spring.dependency-management" version "1.0.6.RELEASE"
+    id 'org.detoeuf.swagger-codegen' version '1.7.1'
+    id 'org.springframework.boot' version '2.1.1.RELEASE'
+    id "io.spring.dependency-management" version "1.0.6.RELEASE"
 }
 
 
@@ -40,9 +40,7 @@ apply plugin: 'java'
 apply plugin: 'project-report'
 
 
-
-
-apply from:  'repositories.gradle'
+apply from: 'repositories.gradle'
 
 sourceCompatibility = JavaVersion.VERSION_1_8
 targetCompatibility = JavaVersion.VERSION_1_8
@@ -50,7 +48,7 @@ targetCompatibility = JavaVersion.VERSION_1_8
 
 idea {
     module {
-      //  downloadJavadoc = true
+        //  downloadJavadoc = true
         downloadSources = true
     }
 }
@@ -66,31 +64,31 @@ dependencies {
 
 tomcat {
     httpProtocol = 'org.apache.coyote.http11.Http11Nio2Protocol'
-    ajpProtocol  = 'org.apache.coyote.ajp.AjpNio2Protocol'
+    ajpProtocol = 'org.apache.coyote.ajp.AjpNio2Protocol'
 }
 
 
 dependencies {
     // https://mvnrepository.com/artifact/org.springframework/spring-framework-bom
-   // compile group: 'org.springframework', name: 'spring-framework-bom', version: '5.1.3.RELEASE', ext: 'pom'
+    // compile group: 'org.springframework', name: 'spring-framework-bom', version: '5.1.3.RELEASE', ext: 'pom'
 
     // https://mvnrepository.com/artifact/org.springframework/spring-web
-  //  compile group: 'org.springframework', name: 'spring-web', version: '5.1.3.RELEASE'
+    //  compile group: 'org.springframework', name: 'spring-web', version: '5.1.3.RELEASE'
     // https://mvnrepository.com/artifact/org.springframework.data/spring-data-jpa
- //   compile group: 'org.springframework.data', name: 'spring-data-jpa' , version: '2.1.3.RELEASE'
+    //   compile group: 'org.springframework.data', name: 'spring-data-jpa' , version: '2.1.3.RELEASE'
     compile 'org.projectlombok:lombok:1.16.14'
     compile group: 'com.microsoft.sqlserver', name: 'sqljdbc4', version: '4.0'
 
-   // compile "org.flywaydb:flyway-core:5.0.2"
-   // compile 'com.google.guava:guava:21.0'
-   // compile ('io.springfox:springfox-core:2.5.0') {
-   //     exclude module: 'jackson-databind'
-  //  }
- //   compile 'io.springfox:springfox-spi:2.5.0'
-  //  compile ('io.springfox:springfox-spring-web:2.5.0') {
-  //      exclude module: 'jackson-databind'
-  //  }
-  //  compile 'io.springfox:springfox-swagger2:2.5.0'
+    // compile "org.flywaydb:flyway-core:5.0.2"
+    // compile 'com.google.guava:guava:21.0'
+    // compile ('io.springfox:springfox-core:2.5.0') {
+    //     exclude module: 'jackson-databind'
+    //  }
+    //   compile 'io.springfox:springfox-spi:2.5.0'
+    //  compile ('io.springfox:springfox-spring-web:2.5.0') {
+    //      exclude module: 'jackson-databind'
+    //  }
+    //  compile 'io.springfox:springfox-swagger2:2.5.0'
     compile 'org.apache.commons:commons-lang3:3.5'
 
     // https://mvnrepository.com/artifact/log4j/log4j
@@ -102,12 +100,12 @@ dependencies {
 
     // logging
     compile 'org.slf4j:slf4j-api:1.7.25'
-   // runtime 'net.logstash.logback:logstash-logback-encoder:4.7'
+    // runtime 'net.logstash.logback:logstash-logback-encoder:4.7'
 
-  //  compile 'org.springframework.boot:spring-boot-starter-tomcat'
+    //  compile 'org.springframework.boot:spring-boot-starter-tomcat'
     compile 'org.springframework.boot:spring-boot-starter-web'
-    compile ('org.springframework.boot:spring-boot-starter-data-jpa') {
-      // exclude module: 'hibernate-entitymanager'
+    compile('org.springframework.boot:spring-boot-starter-data-jpa') {
+        // exclude module: 'hibernate-entitymanager'
     }
     // https://mvnrepository.com/artifact/org.springframework.security/spring-security-web
     compile group: 'org.springframework.security', name: 'spring-security-web'
@@ -116,7 +114,7 @@ dependencies {
     compile group: 'commons-fileupload', name: 'commons-fileupload', version: '1.4'
 
     //  compile 'javax.interceptor:javax.interceptor-api:1.+'
-   // compile 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.8.5'
+    // compile 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.8.5'
     compile "com.fasterxml.jackson.core:jackson-databind:2.9.7"
     compile "com.fasterxml.jackson.core:jackson-core:2.9.7"
     compile "com.fasterxml.jackson.core:jackson-annotations:2.9.7"
@@ -130,12 +128,12 @@ dependencies {
     compile group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-hibernate5', version: '2.9.7'
 
     // runtime database & ORM
-   // compile 'mysql:mysql-connector-java:5.1.6'
+    // compile 'mysql:mysql-connector-java:5.1.6'
     testCompile 'org.springframework.boot:spring-boot-starter-test'
 //    runtime 'com.zaxxer:HikariCP'
 //    runtime 'io.springfox:springfox-swagger-ui:2.5.0'
 
-  //  runtime 'org.springframework.boot:spring-boot-starter-actuator'
+    //  runtime 'org.springframework.boot:spring-boot-starter-actuator'
 
     testCompile 'junit:junit:4.12'
     testCompile 'org.mockito:mockito-core:2.7.19'

@@ -16,7 +16,6 @@ import java.util.Properties;
 
 /**
  * courtesy : https://thoughts-on-java.org/custom-sequence-based-idgenerator/
- *
  */
 public class StringPrefixedSequenceIdGenerator extends SequenceStyleGenerator {
 
@@ -42,7 +41,7 @@ public class StringPrefixedSequenceIdGenerator extends SequenceStyleGenerator {
     public void configure(Type type, Properties params,
                           ServiceRegistry serviceRegistry) throws MappingException {
         super.configure(LongType.INSTANCE, params, serviceRegistry);
-        final JdbcEnvironment jdbcEnvironment = serviceRegistry.getService( JdbcEnvironment.class );
+        final JdbcEnvironment jdbcEnvironment = serviceRegistry.getService(JdbcEnvironment.class);
         final Dialect dialect = jdbcEnvironment.getDialect();
 
         valuePrefix = ConfigurationHelper.getString(VALUE_PREFIX_PARAMETER,

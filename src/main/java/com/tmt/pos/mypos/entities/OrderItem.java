@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 @Table(name = "OrderItem")
 @ToString(exclude = {"order"})
 @EqualsAndHashCode(of = {"orderItemId"})
-public class OrderItem {
+public class OrderItem implements BaseEntity<Long> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -59,7 +59,12 @@ public class OrderItem {
     @Column(name = "notes")
     private String notes;
 
-    public BigDecimal calculatedTotalAmount(){
-     return BigDecimal.valueOf(this.getNetAmount().doubleValue() + this.getTaxAmount().doubleValue() - this.getDiscountAmount().doubleValue());
+    @Override
+    public Long getId() {
+        return orderItemId;
+    }
+
+    public BigDecimal calculatedTotalAmount() {
+        return BigDecimal.valueOf(this.getNetAmount().doubleValue() + this.getTaxAmount().doubleValue() - this.getDiscountAmount().doubleValue());
     }
 }

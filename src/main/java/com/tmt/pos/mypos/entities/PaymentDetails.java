@@ -11,7 +11,7 @@ import java.util.Date;
 @Entity(name = "com.tmt.pos.mypos.entities.PaymentDetails")
 @Table(name = "PaymentDetails")
 @EqualsAndHashCode(of = {"paymentDetailsId"})
-public class PaymentDetails {
+public class PaymentDetails implements BaseEntity<Long> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -47,4 +47,9 @@ public class PaymentDetails {
 
     @Column(name = "modification_time")
     private Date modificationTime;
+
+    @Override
+    public Long getId() {
+        return paymentDetailsId;
+    }
 }

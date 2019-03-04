@@ -11,10 +11,10 @@ import javax.persistence.*;
 @Entity(name = "com.tmt.pos.mypos.entities.User")
 @Table(name = "Users")
 @EqualsAndHashCode(of = {"userId"})
-public class User {
+public class User implements BaseEntity<Long> {
 
     @Id
-    @GeneratedValue(strategy    = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id", updatable = false, nullable = false)
     private Long userId;
 
@@ -33,4 +33,12 @@ public class User {
     @JsonIgnore
     @Column(name = "password")
     private String password;
+
+    public String getSalesManIdentifier(){
+        return userName + " - " + firstName + " " + lastName;
+    }
+    @Override
+    public Long getId() {
+        return userId;
+    }
 }

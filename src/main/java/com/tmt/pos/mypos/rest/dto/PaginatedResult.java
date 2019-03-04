@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.ToString;
 
 import java.util.List;
+
 @Data
 @ToString(exclude = {"content"})
 @Builder
@@ -15,6 +16,6 @@ public class PaginatedResult<T> {
     private long totalPages;
     private long totalElements;
     private long size;
-    private boolean isFirst ;
-    private boolean isLast ;
+    private boolean isFirst;
+    private boolean isLast;
 }

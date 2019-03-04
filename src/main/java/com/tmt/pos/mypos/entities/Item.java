@@ -15,7 +15,7 @@ import java.util.Date;
 @Entity(name = "com.tmt.pos.mypos.entities.Item")
 @Table(name = "Item")
 @EqualsAndHashCode(of = {"itemCode"})
-public class Item {
+public class Item implements BaseEntity<String> {
 
     @Id
     @Column(name = "item_code")
@@ -44,4 +44,9 @@ public class Item {
 
     @Column(name = "modification_time")
     private Date modificationTime;
+
+    @Override
+    public String getId() {
+        return itemCode;
+    }
 }

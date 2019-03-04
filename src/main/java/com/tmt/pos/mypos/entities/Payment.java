@@ -13,7 +13,7 @@ import java.util.List;
 @Entity(name = "com.tmt.pos.mypos.entities.Payment")
 @Table(name = "Payment")
 @EqualsAndHashCode(of = {"paymentId"})
-public class Payment {
+public class Payment implements BaseEntity<Long> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -38,8 +38,13 @@ public class Payment {
     @Column(name = "modification_time")
     private Date modificationTime;
 
-    public void addPayment(PaymentDetails paymentDetails){
+    public void addPayment(PaymentDetails paymentDetails) {
         this.paymentDetailsList.add(paymentDetails);
         paymentDetails.setPayment(this);
+    }
+
+    @Override
+    public Long getId() {
+        return paymentId;
     }
 }

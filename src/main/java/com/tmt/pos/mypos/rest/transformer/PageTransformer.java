@@ -8,8 +8,8 @@ import org.springframework.data.domain.Page;
  */
 public class PageTransformer {
 
-     public static <T> PaginatedResult<T> transformOutput(Page<T> page){
-        return  PaginatedResult.<T>builder()
+    public static <T> PaginatedResult<T> transformOutput(Page<T> page) {
+        return PaginatedResult.<T>builder()
                 .content(page.getContent())
                 .isFirst(page.isFirst())
                 .isLast(page.isLast())

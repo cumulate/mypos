@@ -12,7 +12,7 @@ import java.util.List;
 @Data
 @Entity(name = "com.tmt.pos.mypos.entities.Invoice")
 @Table(name = "Invoice")
-public class Invoice {
+public class Invoice implements BaseEntity<String> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "invoice_seq")
@@ -23,7 +23,7 @@ public class Invoice {
                     @org.hibernate.annotations.Parameter(name = SequenceStyleGenerator.SEQUENCE_PARAM, value = "invoice_seq"),
                     @org.hibernate.annotations.Parameter(name = StringPrefixedSequenceIdGenerator.INCREMENT_PARAM, value = "50"),
                     @org.hibernate.annotations.Parameter(name = StringPrefixedSequenceIdGenerator.VALUE_PREFIX_PARAMETER, value = "ORD_"),
-                    @org.hibernate.annotations.Parameter(name = StringPrefixedSequenceIdGenerator.NUMBER_FORMAT_PARAMETER, value = "%08d") })
+                    @org.hibernate.annotations.Parameter(name = StringPrefixedSequenceIdGenerator.NUMBER_FORMAT_PARAMETER, value = "%08d")})
     @Column(name = "invoice_number")
     private String invoiceNumber;
 
@@ -31,7 +31,7 @@ public class Invoice {
      * @Column(name = "order_number")
      * private String orderNumber;
      */
-    @OneToMany(fetch = FetchType.LAZY )
+    @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "order_number")
     private List<Order> orderList;
 
@@ -47,4 +47,9 @@ public class Invoice {
 
     @Column(name = "modification_time")
     private Date modificationTime;
+
+    @Override
+    public String getId() {
+        return invoiceNumber;
+    }
 }

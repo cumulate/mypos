@@ -10,7 +10,7 @@ import javax.persistence.*;
 @Entity(name = "com.tmt.pos.mypos.entities.Customer")
 @Table(name = "Customer")
 @EqualsAndHashCode(of = {"customerCode"})
-public class Customer {
+public class Customer implements BaseEntity<String> {
 
 
     @Id
@@ -33,7 +33,13 @@ public class Customer {
     @Column(name = "zipcode")
     private String zipcode;
 
-    @OneToOne
-    @JoinColumn(name = "sales_man" )
+    @OneToOne()
+    @JoinColumn(name = "sales_man")
     private User salesMan;
+
+
+    @Override
+    public String getId() {
+        return customerCode;
+    }
 }

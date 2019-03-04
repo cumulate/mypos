@@ -12,26 +12,26 @@ import javax.servlet.Filter;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletRegistration;
 
-public class MyWebAppInitializer  extends AbstractAnnotationConfigDispatcherServletInitializer {
+public class MyWebAppInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
 
     @Override
     protected Class<?>[] getRootConfigClasses() {
-        return new Class[] { RootConfig.class };
+        return new Class[]{RootConfig.class};
     }
 
     @Override
     protected Class<?>[] getServletConfigClasses() {
-        return new Class[] { WebMVCConfig.class };
+        return new Class[]{WebMVCConfig.class};
     }
 
     @Override
     protected String[] getServletMappings() {
-        return new String[] { "/" };
+        return new String[]{"/"};
     }
 
     @Override
     protected Filter[] getServletFilters() {
-        return new Filter[] { new DelegatingFilterProxy("csrfFilter") };
+        return new Filter[]{new DelegatingFilterProxy("csrfFilter")};
     }
 
 }

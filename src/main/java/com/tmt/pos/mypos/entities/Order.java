@@ -21,7 +21,7 @@ import java.util.List;
 @Table(name = "Orders")
 @EqualsAndHashCode(of = {"orderNumber"})
 //@ToString(exclude = {"orderItemList"})
-public class Order {
+public class Order implements BaseEntity<String> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "order")
@@ -33,7 +33,7 @@ public class Order {
                     @Parameter(name = SequenceStyleGenerator.SEQUENCE_PARAM, value = "order_seq"),
                     @Parameter(name = StringPrefixedSequenceIdGenerator.INCREMENT_PARAM, value = "50"),
                     @Parameter(name = StringPrefixedSequenceIdGenerator.VALUE_PREFIX_PARAMETER, value = "ORD_"),
-                    @Parameter(name = StringPrefixedSequenceIdGenerator.NUMBER_FORMAT_PARAMETER, value = "%08d") })
+                    @Parameter(name = StringPrefixedSequenceIdGenerator.NUMBER_FORMAT_PARAMETER, value = "%08d")})
     @Column(name = "order_number")
     private String orderNumber;
 
@@ -76,7 +76,12 @@ public class Order {
     private String notes;
 
 
-    public void addOrderItem(OrderItem orderItem){
+    @Override
+    public String getId() {
+        return orderNumber;
+    }
+
+    public void addOrderItem(OrderItem orderItem) {
         this.orderItemList.add(orderItem);
         orderItem.setOrder(this);
         orderItem.setCreationTime(this.creationTime);
