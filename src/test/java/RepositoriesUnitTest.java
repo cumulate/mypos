@@ -1,3 +1,5 @@
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.tmt.pos.mypos.dao.CustomerRepository;
 import com.tmt.pos.mypos.dao.OrderRepository;
 import com.tmt.pos.mypos.dao.UsersRepository;
@@ -121,6 +123,22 @@ public class RepositoriesUnitTest {
 
         Page<User> users = userRepository.findByLastNameLikeOrFirstNameLike(name, name, page);
         assertTrue("no users found", users.hasContent());
+
+    }
+
+    @Test
+    public void jsonIgnoreTest(){
+        String json = "{\n" +
+                "    \"userName\": \"user\",\n" +
+                "    \"password\": \"password\"\n" +
+                "}";
+        ObjectMapper map = new ObjectMapper();
+        User user =  map.convertValue(json, User.class);
+        try {
+            System.out.println("" +  map.writeValueAsString(user));
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
 
     }
 }

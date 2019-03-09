@@ -2,6 +2,7 @@ package com.tmt.pos.mypos.entities;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -30,7 +31,8 @@ public class User implements BaseEntity<Long> {
     @Column(name = "email")
     private String email;
 
-    @JsonIgnore
+
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @Column(name = "password")
     private String password;
 

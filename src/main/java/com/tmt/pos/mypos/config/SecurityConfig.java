@@ -1,9 +1,13 @@
 package com.tmt.pos.mypos.config;
 
 
+import com.tmt.pos.mypos.config.auth.jwt.JwtAuthenticationEntryPoint;
+import com.tmt.pos.mypos.config.auth.jwt.JwtAuthenticationFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -11,43 +15,70 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
-import org.springframework.security.web.csrf.CsrfFilter;
-import org.springframework.security.web.servlet.support.csrf.CsrfRequestDataValueProcessor;
-import org.springframework.web.servlet.support.RequestDataValueProcessor;
 
 @EnableWebSecurity
 @Configuration
+@ComponentScan
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 
+    /* @Resource(name = "userService")
+     private UserDetailsService userDetailsService;
+ */
+    @Autowired
+    private JwtAuthenticationEntryPoint unauthorizedHandler;
+
+    @Override
+    @Bean
+    public AuthenticationManager authenticationManagerBean() throws Exception {
+        return super.authenticationManagerBean();
+    }
+
+    @Bean
+    public JwtAuthenticationFilter authenticationTokenFilterBean() throws Exception {
+        return new JwtAuthenticationFilter();
+    }
+
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userDetailsService());
+        auth.userDetailsService(userDetailsService()).passwordEncoder(encoder());
         // auth.inMemoryAuthentication().withUser("user").password("password").roles("USER");
     }
 
     protected void configure(HttpSecurity http) throws Exception {
         http
+                .csrf().disable() //.csrfTokenRepository(csrfTokenRepository()).and()
+                .authorizeRequests()
+                .antMatchers("/auth/**", "/signup", "home/**", "static/**").permitAll()
+                .antMatchers("/customer/salesMan*").permitAll() //work around for ngx type ahead module for the time being
+                .anyRequest().authenticated().and()
+                .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
-                /*   .httpBasic()
-                   .and()
-                   .authorizeRequests()
-                   .antMatchers("/index.html", "/home", "/login").permitAll()
-                   .anyRequest().authenticated();*/
-                .authorizeRequests().anyRequest().authenticated().and()
-                .formLogin().and()  //formLogin doesn't work for xhr requests
-                //.httpBasic().and() //basic auth works for xhr requests
-                .csrf().csrfTokenRepository(csrfTokenRepository());
+                .addFilterBefore(authenticationTokenFilterBean(), UsernamePasswordAuthenticationFilter.class);
+        //.formLogin().and()  //formLogin doesn't work for xhr requests
+        //.httpBasic().and() //basic auth works for xhr requests
+        ;
 
     }
 
     @Bean
     public UserDetailsService userDetailsService() {
         InMemoryUserDetailsManager manager = new InMemoryUserDetailsManager();
-        manager.createUser(User.withDefaultPasswordEncoder().username("user").password("password").roles("USER").build());
+        PasswordEncoder encoder = encoder();
+        User.UserBuilder builder = User.builder().passwordEncoder(encoder::encode);
+        manager.createUser(builder.username("user").password("password").roles("USER").build());
+        manager.createUser(builder.username("admin").password("admin").roles("ADMIN").build());
         return manager;
+    }
+
+    @Bean
+    public BCryptPasswordEncoder encoder() {
+        return new BCryptPasswordEncoder();
     }
 
 
@@ -63,11 +94,4 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return cookieCsrfTokenRepository; //new CsrfFilter(cookieCsrfTokenRepository);//use of  HttpSessionCsrfTokenRepository is forbidden as we are not implemented any authentication mechanism yet
     }
 
-    // Provides automatic CSRF token inclusion when using Spring MVC Form tags or Thymeleaf.
-    // See http://localhost:8080/#forms and form.jsp for examples
-
-    @Bean
-    public RequestDataValueProcessor requestDataValueProcessor() {
-        return new CsrfRequestDataValueProcessor();
-    }
 }
